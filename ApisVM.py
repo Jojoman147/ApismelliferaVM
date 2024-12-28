@@ -19,11 +19,12 @@ def onclick(event):
     if event.dblclick:
         plt.plot(x, y, 'go')
         body.append((x, y))
-        plt.text(x, y, str(len(body)-1), color='red')  # Oznaèenie bodu èíslicou
+        plt.text(x, y, str(len(body)-1), color='red')  # Marking a point with a number
         plt.draw()
-
+        # Distance calculation definition.
 def vypocet_vzdialenosti(bod1, bod2, skala):
     return np.sqrt((bod2[0] - bod1[0])**2 + (bod2[1] - bod1[1])**2) * skala
+    # Angle calculation definition
 def vypocet_uhla(bod1, bod2, bod3):
     a = np.array(bod1)
     b = np.array(bod2)
@@ -36,29 +37,30 @@ def vypocet_uhla(bod1, bod2, bod3):
     angle = np.arccos(cosine_angle)
 
     return np.degrees(angle)
+# Polygon calculation definition
 def vypocet_plochy_polygonu(body_polygonu, skala):
     x = [bod[0] for bod in body_polygonu]
     y = [bod[1] for bod in body_polygonu]
     return 0.5 * np.abs(np.dot(x, np.roll(y, 1)) - np.dot(y, np.roll(x, 1))) * skala**2
-# Funkcia pre výpoèet bodu 45 bod na 0-7 radialny index k Diskodialnej odchylke 
+# Function for calculating point 45. The point lies on the semi-line 0-7 radial index to the discodial deviation
 def vypocet_bodu45(bod2, bod9, bod7):
     u = bod9 - bod2
     v = bod7 - bod2
     t = np.dot(u, v) / np.dot(u, u)
     bod45 = bod2 + t * u
     return bod45
-# Funkcia pre výpoèet bodu 55 k DO ako bod najbližši k bodu 5 
+# Function to calculate point 55 to DO as the point closest to point 5 
 def vypocet_bodu55(bod5, bod45, bod7):
     u = bod7 - bod45
     v = bod5 - bod45
     t = np.dot(u, v) / np.dot(u, u)
     bod55 = bod45 + t * u
     return bod55
-# Funkcia pre výpoèet vzdialenosti DO
+# DO distance calculation function
 def vypocet_vzdialenosti_DO(bod5, bod55, skala):
     return np.linalg.norm(bod5 - bod55) * skala
 
-# Funkcia pre výpoèet bodu 40 vypoèet aR bR
+# Function for calculating point 40 calculating aR bR
 def vypocet_bodu40(bod2, bod5, bod9):
     u = bod9 - bod2
     v = bod5 - bod2
@@ -367,7 +369,7 @@ class Frontwing(customtkinter.CTkFrame):
         plt.show()
 
         if len(body) >= 2:
-            # Výpoèet škály na základe vzdialenosti medzi prvými dvoma bodmi
+            # Calculation of the scale based on the distance between the first two points
             skala = 1 / vypocet_vzdialenosti(body[0], body[1], 1)
             self.master.calibration_factor = skala
             self.calibration_btn.configure(text='Successful Calibration', font=('Bradley Hand ITC', 12), command=lambda: None)
@@ -442,7 +444,7 @@ class Frontwing(customtkinter.CTkFrame):
             data.append(['Vzdialenos DO', f'{DO:.4f}'])
         if len(body) >= 3:
        
-            # Výpoèet vzdialenosti
+            # Calculation of distance
             vzdialenostA = vypocet_vzdialenosti(body[4], body[6], skala)
             data.append(['Dlzka A', f'{vzdialenostA:.4f}'])
             vzdialenostB = vypocet_vzdialenosti(body[3], body[4], skala)
@@ -499,6 +501,16 @@ class Frontwing(customtkinter.CTkFrame):
             plocha = vypocet_plochy_polygonu(body_polygonu,skala)
             data.append(['Area 6', f'{plocha:.4f}'])
         
+            bod2 = np.array(body[2])
+            bod5 = np.array(body[5])
+            bod9 = np.array(body[9])
+            bod40 = vypocet_bodu40(bod2, bod5, bod9)
+            aR = vypocet_vzdialenosti(bod2, bod40, skala)
+            bR = vypocet_vzdialenosti(bod9, bod40, skala)
+            predlaketnyM = vypocet_vzdialenosti(body[10], body[12], skala)
+            cinkovyC = vypocet_vzdialenosti(body[3], body[6], skala)
+            cinkovyM = vypocet_vzdialenosti(body[7], body[8], skala)
+
             Cubital_index = vzdialenostA / vzdialenostB
             data.append(['Cubital index:', f'{Cubital_index:.4f}'])
             Preubital_index = predlaketnyC / predlaketnyM
@@ -507,21 +519,11 @@ class Frontwing(customtkinter.CTkFrame):
             data.append(['Dumb-bell_index', f'{Dumb_bell_index:.4f}'])               
             Radial_index = aR / bR
             data.append(['Radial index', f'{Radial_index:.4f}'])
-            # Výpoèet aR a bR
-            bod2 = np.array(body[2])
-            bod5 = np.array(body[5])
-            bod9 = np.array(body[9])
-            bod40 = vypocet_bodu40(bod2, bod5, bod9)
-            aR = vypocet_vzdialenosti(bod2, bod40, skala)
             data.append(['Dåžka aR', f'{aR:.4f}'])
-            bR = vypocet_vzdialenosti(bod9, bod40, skala)
             data.append(['Dåžka bR', f'{bR:.4f}'])
             data.append(['predlaketnyC', f'{predlaketnyC:.4f}'])
-            predlaketnyM = vypocet_vzdialenosti(body[10], body[12], skala)
-            data.append(['predlaketnyM', f'{predlaketnyM:.4f}'])
-            cinkovyC = vypocet_vzdialenosti(body[3], body[6], skala)
+            data.append(['predlaketnyM', f'{predlaketnyM:.4f}'])          
             data.append(['cinkovyC', f'{cinkovyC:.4f}'])
-            cinkovyM = vypocet_vzdialenosti(body[7], body[8], skala)
             data.append(['cinkovyM', f'{cinkovyM:.4f}'])
 
 
@@ -670,7 +672,7 @@ class Backwing(customtkinter.CTkFrame):
         plt.show()
 
         if len(body) >= 2:
-            # Výpoèet škály na základe vzdialenosti medzi prvými dvoma bodmi
+            # Calculation of the scale based on the distance between the first two points
             skala = 1 / vypocet_vzdialenosti(body[0], body[1], 1)
             self.master.calibration_factor = skala
             self.calibration_btn.configure(text='Successful Calibration', font=('Bradley Hand ITC', 12), command=lambda: None)
@@ -801,7 +803,6 @@ class Backwing(customtkinter.CTkFrame):
     def back_to_main(self, master):
         master.show_textbox()
 
-
     def open_help(self):
         help_path = os.path.join("Documentation", "Back.pdf")
         if os.path.exists(help_path):
@@ -811,7 +812,6 @@ class Backwing(customtkinter.CTkFrame):
 class Excel(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
-
 
         # Replace main content frame with Frontwing content
         master.content_frame.destroy()
@@ -1129,7 +1129,7 @@ class Excel(customtkinter.CTkFrame):
     def back_to_main(self, master):
         master.show_textbox()
         master.clear_right_sidebar()
-
+        # Unused switch to help pdf
     def open_help(self):
         help_path = os.path.join("Documentation", "ApisVM Script User Manual.pdf")
         if os.path.exists(help_path):
