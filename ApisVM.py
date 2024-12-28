@@ -128,12 +128,12 @@ class App(customtkinter.CTk):
     1.Frontwing: For analyzing the front wing.
     2.Backwing: For analyzing the back wing.
     3.Excel: For merging Excel files and calculating probabilities.
-    4. XY points: For displaying point coordinates.Comming soon
+    4. XY points: For displaying point coordinates and for Geometric analysis.Coming soon.
 
 **Main Content**
     1.Calibration: Set calibration based on the selected image.
     2.Save: Set the path for saving results.
-    3.Analysis: Start the wing analysis.
+    3.Analysis: Start the wing analysis. 
     4.Recalibrate: Reset the calibration.
     5.Reset Save: Reset the save path.
 
@@ -141,7 +141,7 @@ class App(customtkinter.CTk):
 1. **Calibration**
    1.Click the **Calibration** button.
    2.Select an image of the wing for calibration.
-   3.Double-click to mark two points on the image to calculate the scale.
+   3.Double-click the image and mark out a distance of 1mm using the two points of the calibration ruler to calculate the scale.
    4.After successful calibration, a message will appear indicating successful calibration.
 
 2. **Setting the Save Path**
@@ -150,16 +150,21 @@ class App(customtkinter.CTk):
    3.After successfully setting the path, a message will appear indicating successful save.
 
 3. **Wing Analysis**
-   1.Click the **Frontwing analysis** or **Backwing analysis** button depending on which wing you want to analyze.
-   2.Select an image of the wing for analysis.
-   3.Double-click to mark points on the image according to the DAWINO methodology.
-   4.The script will calculate distances, angles, and other parameters and save the results to an Excel file.
+    1.Please study the sample point location images in the Images folder before the analysis.
+    2.Click the Frontwing analysis or Backwing analysis button depending on which wing you want to analyze.
+    3.Select an image of the wing for analysis.
+    4.Double-click to mark points on the image according to the DAWINO methodology.
+    5.The script will calculate distances, angles, and other parameters and save the results to an Excel file.
+    6.After the analysis of the front wing, an Excel file of Front and GeometricF is created.  After the analysis of the back wing, an Excel file Back and GeometricB will be created.
+      GeometricF and GeometricB are created in preparation for making future analysis of the XY points button available.
+
 
 4. **Merging Excel Files**
-   1.Click the **Excel** button.
-   2.Select the **Front excel merger** or **Back excel merger** option.
-   3.Select the Excel files you want to merge.
-   4.The script will create a new Excel file with average and median values.
+    1.In the next steps, only the Front or Back file is used.
+    2.Click the Excel button.
+    3.Select the Front excel merger or Back excel merger option.
+    4.Select the Excel files you want to merge.
+    5.The script will create a new Excel file with average and median values.
 
 5. **Calculating Probabilities**
    1.Click the **Excel** button.
@@ -177,7 +182,7 @@ class App(customtkinter.CTk):
         self.bottom_frame.grid(row=1, column=0, columnspan=2, sticky="ew")
         
         self.bottom_label = customtkinter.CTkLabel(self.bottom_frame,
-                                                   text="Toto je program pre analýzu vèelieho krídla pod¾a metodiky DAWINO.",
+                                                   text="This is the program for the analysis of the bee wing according to the DAWINO methodology.",
                                                    anchor="center")
         self.bottom_label.pack(expand=True)
 
@@ -226,7 +231,7 @@ class App(customtkinter.CTk):
     1.Frontwing: For analyzing the front wing.
     2.Backwing: For analyzing the back wing.
     3.Excel: For merging Excel files and calculating probabilities.
-    4. XY points: For displaying point coordinates.Comming soon
+    4. XY points: For displaying point coordinates and for Geometric analysis.Coming soon.
 
 **Main Content**
     1.Calibration: Set calibration based on the selected image.
@@ -239,7 +244,7 @@ class App(customtkinter.CTk):
 1. **Calibration**
    1.Click the **Calibration** button.
    2.Select an image of the wing for calibration.
-   3.Double-click to mark two points on the image to calculate the scale.
+   3.Double-click the image and mark out a distance of 1mm using the two points of the calibration ruler to calculate the scale.
    4.After successful calibration, a message will appear indicating successful calibration.
 
 2. **Setting the Save Path**
@@ -248,16 +253,20 @@ class App(customtkinter.CTk):
    3.After successfully setting the path, a message will appear indicating successful save.
 
 3. **Wing Analysis**
-   1.Click the **Frontwing analysis** or **Backwing analysis** button depending on which wing you want to analyze.
-   2.Select an image of the wing for analysis.
-   3.Double-click to mark points on the image according to the DAWINO methodology.
-   4.The script will calculate distances, angles, and other parameters and save the results to an Excel file.
+    1.Please study the sample point location images in the Images folder before the analysis.
+    2.Click the Frontwing analysis or Backwing analysis button depending on which wing you want to analyze.
+    3.Select an image of the wing for analysis.
+    4.Double-click to mark points on the image according to the DAWINO methodology.
+    5.The script will calculate distances, angles, and other parameters and save the results to an Excel file.
+    6.After the analysis of the front wing, an Excel file of Front and GeometricF is created.  After the analysis of the back wing, an Excel file Back and GeometricB will be created.
+    GeometricF and GeometricB are created in preparation for making future analysis of the XY points button available.
 
 4. **Merging Excel Files**
-   1.Click the **Excel** button.
-   2.Select the **Front excel merger** or **Back excel merger** option.
-   3.Select the Excel files you want to merge.
-   4.The script will create a new Excel file with average and median values.
+    1.In the next steps, only the Front or Back file is used.
+    2.Click the Excel button.
+    3.Select the Front excel merger or Back excel merger option.
+    4.Select the Excel files you want to merge.
+    5.The script will create a new Excel file with average and median values.
 
 5. **Calculating Probabilities**
    1.Click the **Excel** button.
@@ -546,13 +555,13 @@ class Frontwing(customtkinter.CTkFrame):
         df_data.to_excel(os.path.join(save_path, f'Front{i}.xlsx'), index=False)
    
    
-        while os.path.exists(os.path.join(save_path, f'GeometrickaF{i}.xlsx')):
+        while os.path.exists(os.path.join(save_path, f'GeometricF{i}.xlsx')):
             i += 1
 
-        df_souradnice.to_excel(os.path.join(save_path, f'GeometrickaF{i}.xlsx'), index=False)
+        df_souradnice.to_excel(os.path.join(save_path, f'GeometricF{i}.xlsx'), index=False)
 
 
-        messagebox.showinfo("Analysis Complete", f"Analysis results saved as Back{i}.xlsx and GeometrickaB{i}.xlsx")
+        messagebox.showinfo("Analysis Complete", f"Analysis results saved as Front{i}.xlsx and GeometricF{i}.xlsx")
         print("Analysis started...")
       
        # Extract the file name from the path and add it to the listbox
@@ -772,12 +781,12 @@ class Backwing(customtkinter.CTkFrame):
 
         df_data.to_excel(os.path.join(save_path, f'Back{i}.xlsx'), index=False)
 
-        while os.path.exists(os.path.join(save_path, f'GeometrickaB{i}.xlsx')):
+        while os.path.exists(os.path.join(save_path, f'GeometricB{i}.xlsx')):
             i += 1
 
-        df_souradnice.to_excel(os.path.join(save_path, f'GeometrickaB{i}.xlsx'), index=False)
+        df_souradnice.to_excel(os.path.join(save_path, f'GeometricB{i}.xlsx'), index=False)
 
-        messagebox.showinfo("Analysis Complete", f"Analysis results saved as Back{i}.xlsx and GeometrickaB{i}.xlsx")
+        messagebox.showinfo("Analysis Complete", f"Analysis results saved as Back{i}.xlsx and GeometricB{i}.xlsx")
         print("Analysis started...")
        # Extract the file name from the path and add it to the listbox
         nazov_obrazku = os.path.basename(cesta_k_obrazku)
@@ -852,7 +861,7 @@ class Excel(customtkinter.CTkFrame):
     def Frontexcel(self):
             root = Tk()
             root.withdraw()  # Hide the main window
-            file_paths = filedialog.askopenfilenames(title="Vyber Excel subory", filetypes=[("Excel subory", "*.xlsx")])
+            file_paths = filedialog.askopenfilenames(title="Select Excel files", filetypes=[("Excel subory", "*.xlsx")])
 
             # List of parameters for the 'Parameter' column
             parameters = [
@@ -896,7 +905,7 @@ class Excel(customtkinter.CTkFrame):
             # Calculate the median for each row 
             result_df['Median'] = result_df.iloc[:, 1:-1].median(axis=1)
 
-            # Function to generate a unique file name if 'vysledna tabu¾ka' already exists
+            # Function to generate a unique file name if 'Table of merged values' already exists
             def generate_unique_filename(base_name, extension):
                 counter = 1
                 new_name = f"{base_name}.{extension}"
@@ -906,7 +915,7 @@ class Excel(customtkinter.CTkFrame):
                 return new_name
 
             # Generate a unique file name for the result file
-            result_file_name = generate_unique_filename("vysledna tabu¾ka", "xlsx")
+            result_file_name = generate_unique_filename("Table of merged values", "xlsx")
 
             # Save the result DataFrame to a new Excel file with a unique name
             result_df.to_excel(result_file_name, index=False)
@@ -917,7 +926,7 @@ class Excel(customtkinter.CTkFrame):
         # Open dialog to select files
         root = Tk()
         root.withdraw()  # Hide the main window
-        file_paths = filedialog.askopenfilenames(title="Vyber Excel subory", filetypes=[("Excel subory", "*.xlsx")])
+        file_paths = filedialog.askopenfilenames(title="Select Excel files", filetypes=[("Excel subory", "*.xlsx")])
 
         # List of parameters for the 'Parameter' column
         parameters = [
@@ -969,7 +978,7 @@ class Excel(customtkinter.CTkFrame):
             return new_name
 
         # Generate a unique file name for the result file
-        result_file_name = generate_unique_filename("vysledna tabu¾ka", "xlsx")
+        result_file_name = generate_unique_filename("Table of merged values", "xlsx")
 
         # Save the result DataFrame to a new Excel file with a unique name
         result_df.to_excel(result_file_name, index=False)
@@ -978,7 +987,7 @@ class Excel(customtkinter.CTkFrame):
     def PPFront(self):
         root = Tk()
         root.withdraw()  # Hide the main window
-        file_path = filedialog.askopenfilename(title="Vyber Excel súbor", filetypes=[("Excel súbory", "*.xlsx")])
+        file_path = filedialog.askopenfilename(title="Select Excel files", filetypes=[("Excel súbory", "*.xlsx")])
 
         # Read the selected Excel file into a DataFrame
         df = pd.read_excel(file_path)
@@ -1053,7 +1062,7 @@ class Excel(customtkinter.CTkFrame):
     def PPBack(self):
         root = Tk()
         root.withdraw()  # Hide the main window
-        file_path = filedialog.askopenfilename(title="Vyber Excel súbor", filetypes=[("Excel súbory", "*.xlsx")])
+        file_path = filedialog.askopenfilename(title="Select Excel files", filetypes=[("Excel súbory", "*.xlsx")])
 
         # Read the selected Excel file into a DataFrame
         df = pd.read_excel(file_path)
