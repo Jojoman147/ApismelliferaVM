@@ -182,7 +182,7 @@ class App(customtkinter.CTk):
         self.bottom_frame.grid(row=1, column=0, columnspan=2, sticky="ew")
         
         self.bottom_label = customtkinter.CTkLabel(self.bottom_frame,
-                                                   text="This is the program for the analysis of the bee wing according to the DAWINO methodology.",
+                                                   text="This is the program for the analysis of the bee wing according to the DAWINO methodology. Version 1.0",
                                                    anchor="center")
         self.bottom_label.pack(expand=True)
 
@@ -277,6 +277,14 @@ class App(customtkinter.CTk):
         self.textbox = customtkinter.CTkTextbox(self.content_frame)
         self.textbox.insert("0.0", textbox_content)
         self.textbox.grid(row=1, column=0, padx=40, pady=(10, 20), sticky="nsew")
+         # Add a bottom frame with centered text
+        self.bottom_frame = customtkinter.CTkFrame(self)
+        self.bottom_frame.grid(row=1, column=0, columnspan=2, sticky="ew")
+        
+        self.bottom_label = customtkinter.CTkLabel(self.bottom_frame,
+                                                   text="This is the program for the analysis of the bee wing according to the DAWINO methodology. Version 1.0",
+                                                   anchor="center")
+        self.bottom_label.pack(expand=True)
 
     def reset_calibration_and_save_path(self):
         self.calibration_factor = None
