@@ -142,7 +142,8 @@ class App(customtkinter.CTk):
    1.Click the **Calibration** button.
    2.Select an image of the wing for calibration.
    3.Double-click the image and mark out a distance of 1mm using the two points of the calibration ruler to calculate the scale.
-   4.After successful calibration, a message will appear indicating successful calibration.
+   4.The pop-up window should be closed once two calibration points have been added.
+   5.After successful calibration, a message will appear indicating successful calibration.
 
 2. **Setting the Save Path**
    1.Click the **Save** button.
@@ -154,8 +155,9 @@ class App(customtkinter.CTk):
     2.Click the Frontwing analysis or Backwing analysis button depending on which wing you want to analyze.
     3.Select an image of the wing for analysis.
     4.Double-click to mark points on the image according to the DAWINO methodology.
-    5.The script will calculate distances, angles, and other parameters and save the results to an Excel file.
-    6.After the analysis of the front wing, an Excel file of Front and GeometricF is created.  After the analysis of the back wing, an Excel file Back and GeometricB will be created.
+    5.The pop-up window should be closed once points have been added.
+    6.The script will calculate distances, angles, and other parameters and save the results to an Excel file.
+    7.After the analysis of the front wing, an Excel file of Front and GeometricF is created.  After the analysis of the back wing, an Excel file Back and GeometricB will be created.
       GeometricF and GeometricB are created in preparation for making future analysis of the XY points button available.
 
 
@@ -245,7 +247,8 @@ class App(customtkinter.CTk):
    1.Click the **Calibration** button.
    2.Select an image of the wing for calibration.
    3.Double-click the image and mark out a distance of 1mm using the two points of the calibration ruler to calculate the scale.
-   4.After successful calibration, a message will appear indicating successful calibration.
+   4.The pop-up window should be closed once two calibration points have been added.
+   5.After successful calibration, a message will appear indicating successful calibration.
 
 2. **Setting the Save Path**
    1.Click the **Save** button.
@@ -257,8 +260,9 @@ class App(customtkinter.CTk):
     2.Click the Frontwing analysis or Backwing analysis button depending on which wing you want to analyze.
     3.Select an image of the wing for analysis.
     4.Double-click to mark points on the image according to the DAWINO methodology.
-    5.The script will calculate distances, angles, and other parameters and save the results to an Excel file.
-    6.After the analysis of the front wing, an Excel file of Front and GeometricF is created.  After the analysis of the back wing, an Excel file Back and GeometricB will be created.
+    5.The pop-up window should be closed once points have been added.
+    6.The script will calculate distances, angles, and other parameters and save the results to an Excel file.
+    7.After the analysis of the front wing, an Excel file of Front and GeometricF is created.  After the analysis of the back wing, an Excel file Back and GeometricB will be created.
     GeometricF and GeometricB are created in preparation for making future analysis of the XY points button available.
 
 4. **Merging Excel Files**
