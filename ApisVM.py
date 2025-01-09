@@ -1,4 +1,4 @@
-import customtkinter
+ï»¿import customtkinter
 from tkinter import messagebox, filedialog, Tk
 import os
 import matplotlib.pyplot as plt
@@ -458,7 +458,7 @@ class Frontwing(customtkinter.CTkFrame):
             bod45 = vypocet_bodu45(bod2, bod9, bod7)
             bod55 = vypocet_bodu55(bod5, bod45, bod7)
             DO = vypocet_vzdialenosti_DO(bod5, bod55, skala)
-            data.append(['Vzdialenos DO', f'{DO:.4f}'])
+            data.append(['VzdialenosÅ¥ DO', f'{DO:.4f}'])
         if len(body) >= 3:
        
             # Calculation of distance
@@ -536,8 +536,8 @@ class Frontwing(customtkinter.CTkFrame):
             data.append(['Dumb-bell_index', f'{Dumb_bell_index:.4f}'])               
             Radial_index = aR / bR
             data.append(['Radial index', f'{Radial_index:.4f}'])
-            data.append(['Dåžka aR', f'{aR:.4f}'])
-            data.append(['Dåžka bR', f'{bR:.4f}'])
+            data.append(['DÄºÅ¾ka aR', f'{aR:.4f}'])
+            data.append(['DÄºÅ¾ka bR', f'{bR:.4f}'])
             data.append(['predlaketnyC', f'{predlaketnyC:.4f}'])
             data.append(['predlaketnyM', f'{predlaketnyM:.4f}'])          
             data.append(['cinkovyC', f'{cinkovyC:.4f}'])
@@ -547,11 +547,11 @@ class Frontwing(customtkinter.CTkFrame):
             for i, (x, y) in enumerate(body):
                 print(f"Bod {i}: x = {x}, y = {y}")
             for i, (x, y) in enumerate(body):
-                data_souradnice.append([f"Súradnice bodu {i} x", f"{x}", f"{y}", f"Súradnice bodu {i} y"])
+                data_souradnice.append([f"SÃºradnice bodu {i} x", f"{x}", f"{y}", f"SÃºradnice bodu {i} y"])
             
             
 
-        # Vytvorenie DataFrame a export do Excelu data_souradnice.append([f"Súradnice bodu {i} y", f"{y}"])
+        # Vytvorenie DataFrame a export do Excelu data_souradnice.append([f"SÃºradnice bodu {i} y", f"{y}"])
         df_data = pd.DataFrame(data, columns=['Parameter', 'Hodnota'])
         df_souradnice = pd.DataFrame(data_souradnice, columns=['Parameter', 'Hodnota x','Hodnota y' , 'Parameter'])
 
@@ -777,7 +777,7 @@ class Backwing(customtkinter.CTkFrame):
             for i, (x, y) in enumerate(body):
                 print(f"Bod {i}: x = {x}, y = {y}")
             for i, (x, y) in enumerate(body):
-                data_souradnice.append([f"Súradnice bodu {i} x", f"{x}", f"Súradnice bodu {i} y", f"{y}"])
+                data_souradnice.append([f"SÃºradnice bodu {i} x", f"{x}", f"SÃºradnice bodu {i} y", f"{y}"])
 
         df_data = pd.DataFrame(data, columns=['Parameter', 'Hodnota'])
         df_souradnice = pd.DataFrame(data_souradnice, columns=['Parameter', 'Hodnota x','Hodnota y' , 'Parameter'])
@@ -976,7 +976,7 @@ class Excel(customtkinter.CTkFrame):
         # Calculate the median for each row 
         result_df['Median'] = result_df.iloc[:, 1:-1].median(axis=1)
 
-        # Function to generate a unique file name if 'vysledna tabu¾ka' already exists
+        # Function to generate a unique file name if 'vysledna tabuÄ¾ka' already exists
         def generate_unique_filename(base_name, extension):
             counter = 1
             new_name = f"{base_name}.{extension}"
@@ -995,7 +995,7 @@ class Excel(customtkinter.CTkFrame):
     def PPFront(self):
         root = Tk()
         root.withdraw()  # Hide the main window
-        file_path = filedialog.askopenfilename(title="Select Excel files", filetypes=[("Excel súbory", "*.xlsx")])
+        file_path = filedialog.askopenfilename(title="Select Excel files", filetypes=[("Excel sÃºbory", "*.xlsx")])
 
         # Read the selected Excel file into a DataFrame
         df = pd.read_excel(file_path)
@@ -1021,10 +1021,10 @@ class Excel(customtkinter.CTkFrame):
             hodnota_counter += 1
 
         # Calculate the average for each row and add it as a new column
-        result_df['Aritmetický priemer'] = result_df.iloc[:, 0:].mean(axis=1)
+        result_df['AritmetickÃ½ priemer'] = result_df.iloc[:, 0:].mean(axis=1)
 
         # Ensure that Average values use decimal points instead of commas
-        result_df['Aritmetický priemer'] = result_df['Aritmetický priemer'].astype(str).str.replace(',', '.').astype(float)
+        result_df['AritmetickÃ½ priemer'] = result_df['AritmetickÃ½ priemer'].astype(str).str.replace(',', '.').astype(float)
 
         # Define the standard values (mean vectors) for six standards
         standard_values_list = [
@@ -1037,7 +1037,7 @@ class Excel(customtkinter.CTkFrame):
         ]
 
         # Extract the average values from the result_df (only first 30 values)
-        average_values = result_df['Aritmetický priemer'].values[:30]
+        average_values = result_df['AritmetickÃ½ priemer'].values[:30]
 
         # Calculate the covariance matrix of the standard values (assuming identity matrix for simplicity)
         cov_matrix = np.identity(len(standard_values_list[0]))
@@ -1070,7 +1070,7 @@ class Excel(customtkinter.CTkFrame):
     def PPBack(self):
         root = Tk()
         root.withdraw()  # Hide the main window
-        file_path = filedialog.askopenfilename(title="Select Excel files", filetypes=[("Excel súbory", "*.xlsx")])
+        file_path = filedialog.askopenfilename(title="Select Excel files", filetypes=[("Excel sÃºbory", "*.xlsx")])
 
         # Read the selected Excel file into a DataFrame
         df = pd.read_excel(file_path)
@@ -1096,10 +1096,10 @@ class Excel(customtkinter.CTkFrame):
             hodnota_counter += 1
 
         # Calculate the average for each row and add it as a new column
-        result_df['Aritmetický priemer'] = result_df.iloc[:, 0:].mean(axis=1)
+        result_df['AritmetickÃ½ priemer'] = result_df.iloc[:, 0:].mean(axis=1)
 
         # Ensure that Average values use decimal points instead of commas
-        result_df['Aritmetický priemer'] = result_df['Aritmetický priemer'].astype(str).str.replace(',', '.').astype(float)
+        result_df['AritmetickÃ½ priemer'] = result_df['AritmetickÃ½ priemer'].astype(str).str.replace(',', '.').astype(float)
 
         # Define the standard values (mean vectors) for six standards(2023)
         standard_values_list = [
@@ -1112,7 +1112,7 @@ class Excel(customtkinter.CTkFrame):
         ]
 
         # Extract the average values from the result_df (only first 9 values)
-        average_values = result_df['Aritmetický priemer'].values[:9]
+        average_values = result_df['AritmetickÃ½ priemer'].values[:9]
 
         # Calculate the covariance matrix of the standard values (assuming identity matrix for simplicity)
         cov_matrix = np.identity(len(standard_values_list[0]))
