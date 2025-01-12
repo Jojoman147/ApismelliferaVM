@@ -8,3 +8,4 @@ Posterior propability in this version is calculated only for Slovak lines of 6 b
 # Upcoming update:
 1. Calculation of Posterior propability for Apis mellifera.
 2. Adjustment of the marked points on the forewing according to the picture Frontwing for version 2.jpg
+Version 1.0
