@@ -13,6 +13,9 @@ import numpy as np
 import xlwings as xw
 import openpyxl
 from scipy.spatial import distance
+
+# Version 1.0.1
+
 body = []
 def onclick(event):
     x, y = event.xdata, event.ydata
@@ -71,7 +74,7 @@ def vypocet_bodu40(bod2, bod5, bod9):
 class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
-
+        
         self.geometry("1000x600")
         self.title("ApisVM")
 
@@ -833,42 +836,127 @@ class Backwing(customtkinter.CTkFrame):
 class Excel(customtkinter.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
+        self.master = master
+        self.create_main_buttons()
 
+    def create_main_buttons(self):
         # Replace main content frame with Frontwing content
-        master.content_frame.destroy()
-        
-        master.content_frame = customtkinter.CTkFrame(master)
-        master.content_frame.grid(row=0, column=1, rowspan=4, sticky="nsew")
-        
+        self.master.content_frame.destroy()
+        self.master.content_frame = customtkinter.CTkFrame(self.master)
+        self.master.content_frame.grid(row=0, column=1, rowspan=4, sticky="nsew")
+
         # Create frames for buttons
-        frame1 = customtkinter.CTkFrame(master.content_frame)
+        frame1 = customtkinter.CTkFrame(self.master.content_frame)
         frame1.pack(fill="both", expand=True)
-
-        frame2 = customtkinter.CTkFrame(master.content_frame)
+        frame2 = customtkinter.CTkFrame(self.master.content_frame)
         frame2.pack(fill="both", expand=True)
-
-        frame3 = customtkinter.CTkFrame(master.content_frame)
+        frame3 = customtkinter.CTkFrame(self.master.content_frame)
         frame3.pack(fill="both", expand=True)
-
-        frame4 = customtkinter.CTkFrame(master.content_frame)
+        frame4 = customtkinter.CTkFrame(self.master.content_frame)
         frame4.pack(fill="both", expand=True)
 
         # Add buttons to frames
         self.ExcelF_btn = customtkinter.CTkButton(frame1, text='Front excel merger', command=self.Frontexcel)
         self.ExcelF_btn.pack(side="left", padx=5, pady=5, expand=True)
-
         self.ExcelB_btn = customtkinter.CTkButton(frame1, text='Back excel merger', command=self.Backexcel)
         self.ExcelB_btn.pack(side="left", padx=5, pady=5, expand=True)
-
-        self.PropF_btn = customtkinter.CTkButton(frame2, text='Posterior probability (Frontwing)',command=self.PPFront)
+        self.PropF_btn = customtkinter.CTkButton(frame2, text='Posterior probability (Frontwing)', command=self.show_apismellifera_buttons)
         self.PropF_btn.pack(side="left", padx=5, pady=5, expand=True)
-
-        self.PropB_btn = customtkinter.CTkButton(frame2, text='Posterior probability (Backwing)', command=self.PPBack)
+        self.PropB_btn = customtkinter.CTkButton(frame2, text='Posterior probability (Backwing)', command=self.show_apismellifera_back_buttons)
         self.PropB_btn.pack(side="left", padx=5, pady=5, expand=True)
-
-
-        self.back_btn = customtkinter.CTkButton(frame4, text='Back', command=lambda: self.back_to_main(master))
+        self.back_btn = customtkinter.CTkButton(frame4, text='Back', command=lambda: self.back_to_main(self.master))
         self.back_btn.pack(side="left", padx=5, pady=5, expand=True)
+
+    def show_apismellifera_buttons(self):
+        # Clear existing buttons
+        for widget in self.master.content_frame.winfo_children():
+            widget.destroy()
+        frame1 = customtkinter.CTkFrame(self.master.content_frame)
+        frame1.pack(fill="both", expand=True)
+        frame2 = customtkinter.CTkFrame(self.master.content_frame)
+        frame2.pack(fill="both", expand=True)
+        frame3 = customtkinter.CTkFrame(self.master.content_frame)
+        frame3.pack(fill="both", expand=True)
+        frame4 = customtkinter.CTkFrame(self.master.content_frame)
+        frame4.pack(fill="both", expand=True)
+
+        # Create new buttons
+        # Configure the grid to expand
+        frame1.grid_columnconfigure(0, weight=1)
+        frame1.grid_columnconfigure(1, weight=1)
+        frame1.grid_columnconfigure(2, weight=1)
+        frame1.grid_rowconfigure(2, weight=1)
+        self.textbox_title = customtkinter.CTkLabel(frame1, text="Posterior probability", font=("Arial", 16))
+        self.textbox_title.grid(row=2, column=1, padx=20, pady=(10, 5), sticky="nsew")
+        textbox_content  = """
+To analyse samples within the subspecies:
+    Apis mellifera carnica Pollm 1879,
+    Apis mellifera mellifera Linnaeus 1758,
+    Apis mellifera ligustica Spinola 1806,
+    Apis mellifera macedonica Ruttner 1998,
+press the Apis mellifera button.
+To analyse samples within breeds in the Slovak Republic, press
+            the button Apis mellifera Carnica."""
+        self.textbox = customtkinter.CTkTextbox(frame1)
+        self.textbox.insert("0.0", textbox_content)
+        self.textbox.grid(row=3, column=1, padx=5, pady=(2, 2), sticky="nsew")
+        self.textbox.configure(state="disabled")
+
+        self.apis_mellifera_btn = customtkinter.CTkButton(frame2, text='Apis mellifera', command=self.PPFront)
+        self.apis_mellifera_btn.pack(side="left", padx=5, pady=5, expand=True)
+        self.apis_mellifera_carnica_btn = customtkinter.CTkButton(frame2, text='Apis mellifera carnica SK', command=self.PPFrontCarnica)
+        self.apis_mellifera_carnica_btn.pack(side="left", padx=5, pady=5, expand=True)
+        self.back_btn = customtkinter.CTkButton(frame3, text='Back',command=self.aa)
+        self.back_btn.pack(side="left", padx=5, pady=5, expand=True)
+
+    def show_apismellifera_back_buttons(self):
+        # Clear existing buttons
+        for widget in self.master.content_frame.winfo_children():
+            widget.destroy()
+        frame1 = customtkinter.CTkFrame(self.master.content_frame)
+        frame1.pack(fill="both", expand=True)
+        frame2 = customtkinter.CTkFrame(self.master.content_frame)
+        frame2.pack(fill="both", expand=True)
+        frame3 = customtkinter.CTkFrame(self.master.content_frame)
+        frame3.pack(fill="both", expand=True)
+        frame4 = customtkinter.CTkFrame(self.master.content_frame)
+        frame4.pack(fill="both", expand=True)
+        # Create new buttons
+        # Configure the grid to expand
+        frame1.grid_columnconfigure(0, weight=1)
+        frame1.grid_columnconfigure(1, weight=1)
+        frame1.grid_columnconfigure(2, weight=1)
+        frame1.grid_rowconfigure(2, weight=1)
+        self.textbox_title = customtkinter.CTkLabel(frame1, text="Posterior probability", font=("Arial", 16))
+        self.textbox_title.grid(row=2, column=1, padx=20, pady=(10, 5), sticky="nsew")
+        textbox_content  = """
+To analyse samples within the subspecies:
+    Apis mellifera carnica Pollm 1879,
+    Apis mellifera mellifera Linnaeus 1758,
+    Apis mellifera ligustica Spinola 1806,
+    Apis mellifera macedonica Ruttner 1998,
+press the Apis mellifera button.
+To analyse samples within breeds in the Slovak Republic, press
+            the button Apis mellifera Carnica."""
+        self.textbox = customtkinter.CTkTextbox(frame1)
+        self.textbox.insert("0.0", textbox_content)
+        self.textbox.grid(row=3, column=1, padx=5, pady=(2, 2), sticky="nsew")
+        self.textbox.configure(state="disabled")
+
+        self.apis_mellifera_btn = customtkinter.CTkButton(frame2, text='Apis mellifera', command=self.massage)
+        self.apis_mellifera_btn.pack(side="left", padx=5, pady=5, expand=True)
+        self.apis_mellifera_carnica_btn = customtkinter.CTkButton(frame2, text='Apis mellifera carnica SK', command=self.PPBackCarnica)
+        self.apis_mellifera_carnica_btn.pack(side="left", padx=5, pady=5, expand=True)
+        self.back_btn = customtkinter.CTkButton(frame3, text='Back',command=self.aa)
+        self.back_btn.pack(side="left", padx=5, pady=5, expand=True)
+    def aa(self):
+        # Replace main content frame with Frontwing content
+        self.master.content_frame.destroy()
+        self.master.content_frame = customtkinter.CTkFrame(self.master)
+        self.master.content_frame.grid(row=0, column=1, rowspan=4, sticky="nsew")
+        self.create_main_buttons()
+    def massage(self):
+        messagebox.showinfo("Non valid standards", "No standards found.")
 
     def Frontexcel(self):
             root = Tk()
@@ -996,7 +1084,7 @@ class Excel(customtkinter.CTkFrame):
         result_df.to_excel(result_file_name, index=False)
 
         print(f"The merged table with average and median calculations has been saved to '{result_file_name}'.")
-    def PPFront(self):
+    def PPFrontCarnica(self):
         root = Tk()
         root.withdraw()  # Hide the main window
         file_path = filedialog.askopenfilename(title="Select Excel files", filetypes=[("Excel súbory", "*.xlsx")])
@@ -1071,7 +1159,7 @@ class Excel(customtkinter.CTkFrame):
 
         # Show the values in a message box
         messagebox.showinfo("Values", "\n".join(values))
-    def PPBack(self):
+    def PPBackCarnica(self):
         root = Tk()
         root.withdraw()  # Hide the main window
         file_path = filedialog.askopenfilename(title="Select Excel files", filetypes=[("Excel súbory", "*.xlsx")])
@@ -1140,6 +1228,80 @@ class Excel(customtkinter.CTkFrame):
 
         # Print Posterior probabilities with specific labels
         labels = ["Value of AMC SOK", "Value of HRA", "Value of AMC MLY", "Value of AMC MAM", "Value of AMC KIS", "Value of AMC STJ"]
+        values = []
+        for i in range(6):
+            values.append(f"{labels[i]}: {posterior_probabilities[i]*100:.2f}%")
+
+        # Show the values in a message box
+        messagebox.showinfo("Values", "\n".join(values))
+    def PPFront(self):
+        root = Tk()
+        root.withdraw()  # Hide the main window
+        file_path = filedialog.askopenfilename(title="Select Excel files", filetypes=[("Excel súbory", "*.xlsx")])
+
+        # Read the selected Excel file into a DataFrame
+        df = pd.read_excel(file_path)
+
+        # Check if 'Hodnota' column exists or any column containing 'Hodnota'
+        hodnota_columns = [col for col in df.columns if 'Hodnota' in col]
+
+        # Initialize an empty DataFrame for the result table
+        result_df = pd.DataFrame()
+
+        # Counter for Hodnota columns
+        hodnota_counter = 1
+
+        for col in hodnota_columns:
+            # Convert 'Hodnota' column to string, replace commas with dots, and convert to float
+            df[col] = df[col].astype(str).str.replace(',', '.').astype(float)
+
+            # Select only the 'Hodnota' column
+            values = df[col]
+
+            # Add the column to the result DataFrame with a new name
+            result_df[f'Hodnota {hodnota_counter}'] = values
+            hodnota_counter += 1
+
+        # Calculate the average for each row and add it as a new column
+        result_df['Aritmetický priemer'] = result_df.iloc[:, 0:].mean(axis=1)
+
+        # Ensure that Average values use decimal points instead of commas
+        result_df['Aritmetický priemer'] = result_df['Aritmetický priemer'].astype(str).str.replace(',', '.').astype(float)
+
+        # Define the standard values (mean vectors) for 4 standards 
+        standard_values_list = [
+            np.array([1.6398, 1.3172, 1.4681, 0.3587, 1.3867, 2.7831, 1.5264, 25.5513, 69.9947]),
+            np.array([1.5954, 1.2732, 1.4162, 0.3433, 1.3559, 2.6865, 1.4729, 25.4025, 72.8911]),
+            np.array([1.6397, 1.3024, 1.4528, 0.3319, 1.4093, 2.7508, 1.5216, 26.3676, 76.0481]),
+            np.array([1.5846, 1.2643, 1.4408, 0.3452, 1.3499, 2.7031, 1.4884, 26.0195, 68.0523]),
+
+        ]
+
+        # Extract the average values from the result_df (only first 30 values)
+        average_values = result_df['Aritmetický priemer'].values[:30]
+
+        # Calculate the covariance matrix of the standard values (assuming identity matrix for simplicity)
+        cov_matrix = np.identity(len(standard_values_list[0]))
+        inv_cov_matrix = np.linalg.inv(cov_matrix)
+
+        # Calculate Mahalanobis distances for all six standards
+        mahalanobis_distances = []
+        for i, standard_values in enumerate(standard_values_list):
+            mahalanobis_distance = distance.mahalanobis(average_values, standard_values, inv_cov_matrix)
+            mahalanobis_distances.append(mahalanobis_distance)
+            print(f"Mahalanobis distance for standard {i+1}: {mahalanobis_distance}")
+
+        # Calculate exponentials of Mahalanobis distances
+        exp_values = [np.exp(-0.5 * d**2) for d in mahalanobis_distances]
+
+        # Calculate the sum of exponentials
+        sum_exp_values = sum(exp_values)
+
+        # Calculate Posterior probabilities
+        posterior_probabilities = [exp_val / sum_exp_values for exp_val in exp_values]
+
+        # Print Posterior probabilities with specific labels
+        labels = ["Value of mellifera", "Value of Carnica", "Value of Macedonica", "Value of Ligustica "]
         values = []
         for i in range(6):
             values.append(f"{labels[i]}: {posterior_probabilities[i]*100:.2f}%")
