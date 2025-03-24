@@ -76,7 +76,7 @@ class App(customtkinter.CTk):
         super().__init__()
         
         self.geometry("1000x600")
-        self.title("ApisVM")
+        self.title("ApismelliferaVM")
 
         # Configure grid layout
         self.grid_columnconfigure(1, weight=1)
