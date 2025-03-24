@@ -88,7 +88,7 @@ class App(customtkinter.CTk):
         self.sidebar_frame.grid_rowconfigure(9, weight=1)
 
         # Add the title to the sidebar
-        self.title_label = customtkinter.CTkLabel(self.sidebar_frame, text="ApisVM", font=("Arial", 20, "bold"))
+        self.title_label = customtkinter.CTkLabel(self.sidebar_frame, text="ApismelliferaVM", font=("Arial", 20, "bold"))
         self.title_label.grid(row=0, column=0, padx=20, pady=(20, 10))
 
         # Add buttons to the sidebar
@@ -123,7 +123,7 @@ class App(customtkinter.CTk):
         self.content_frame.grid_columnconfigure(0, weight=1)
 
         # Add a textbox with a title and text content
-        self.textbox_title = customtkinter.CTkLabel(self.content_frame, text="Guide for ApisVM", font=("Arial", 16))
+        self.textbox_title = customtkinter.CTkLabel(self.content_frame, text="Guide for ApismelliferaVM", font=("Arial", 16))
         self.textbox_title.grid(row=0, column=0, padx=20, pady=(20, 10), sticky="n")
 
         textbox_content =  """
@@ -228,7 +228,7 @@ class App(customtkinter.CTk):
         self.content_frame.grid_rowconfigure(1, weight=1)
         self.content_frame.grid_columnconfigure(0, weight=1)
 
-        self.textbox_title = customtkinter.CTkLabel(self.content_frame, text="Guide for ApisVM", font=("Arial", 16))
+        self.textbox_title = customtkinter.CTkLabel(self.content_frame, text="Guide for ApismelliferaVM", font=("Arial", 16))
         self.textbox_title.grid(row=0, column=0, padx=20, pady=(20, 10), sticky="n")
 
         textbox_content = """
